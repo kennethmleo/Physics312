@@ -22,7 +22,7 @@ website:
       - href: index.qmd
         text: Home
       - href: content/language-model.qmd
-        text: Add content
+        text: Language Models
       - href: content/customizing.qmd
         text: Customizing
 
