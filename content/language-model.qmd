@@ -44,9 +44,21 @@ One problem of the neural network above is that the input size is fixed and in g
 
 #### Recurrent neural networks (RNNs)
 
-In a recurrent neural network, we still have the same neural network discussed above to every word in a series of words. Whats different for RNNs is that last word (newest word) in the sequence of words has the most influence in choosing the next word and the probability of influence of previous words reduce exponentially as new words are being introduced. This makes sense but the problem is, language in itself is more nuanced in the sense that sometimes we need to take into account not only the last word in our sentence but the sentence as a whole. Because of this unique feature of language, the concept of older worlds having less influence becomes a bug and is called the *vanishing gradients* problem
+In a recurrent neural network, we still have the same neural network discussed above to every word in a series of words. Whats different for RNNs is that last word (newest word) in the sequence of words has the most influence in choosing the next word and the probability of influence of previous words reduce exponentially as new words are being introduced. We see in @fig-rnn how RNNs are able to connect information (or words) in a sequential manner. 
+
+![Recurring Neural Network](Figures_LLM/rnn.png){#fig-rnn}
+
+This makes sense but the problem is, language in itself is more nuanced in the sense that sometimes we need to take into account not only the last word in our sentence but the sentence as a whole. For example, in @fig-rnn, if we need the output $h_{10}$, the information from the input $x_1$ has very little effect on the output and this might pose a problem if we are for example dealing with a sentence whose subject and verb are very far from each other. Because of this unique feature of language, the concept of older worlds having less influence becomes a bug and is called the *vanishing gradients* problem
+
+
 
 #### Long short-term memory (LSTM) networks
+
+Now LSTMs solve the *vanishing gradients* problem by introducing a "memory" state whose influence is determined by gates defined by more learnable parameters. The main difference of LSTM fromm RNN is that the former type of network remembers information for long periods of time by default but has there functions, called gates that can either use the information stored to process the output or to "forget" the previous information and not use for the output.
+
+![Long Short-Term Memory Network](Figures_LLM/lstm.png){#fig-lstm}
+
+In an LSTM network, there are three gates that are needed to pass through. First is the gate that chooses which information to forget, then the second gate decides which information to store. In the second gate, we have two functions which decides which values will be updated and what values will be used to update. Lastly, the third gate will decide which information will be the output.
 
 For a demonstration of a line plot on a polar axis, see @fig-polar.
 
