@@ -1,25 +1,69 @@
 ---
-title: Customize
+title: Language Models
+author: Kenneth Leo
+bibliography: references.bib
+format:
+  html:
+    code-fold: true
+jupyter: python3
 ---
 
-## Edit and add your pages
+Language models are an important part of natural language processing (NLP) since they provide a way for computers to process or understand the natural language and to be able to extract information that can be used in different applications. These **natural language** are something that is being used by humans and evolves naturally through repetitive use (speech, sign language, non-verbal cues). 
 
-Edit the qmd or md files in the `content` folder. qmd files can include code (R, Python, Julia) and lots of Quarto markdown bells and whistles (like call-outs, cross-references, auto-citations and much more).
+## What is a language model?
 
-Each page should start with 
+In its simplest form, a language model is a probability distribution such that, given a sequence of words, a language model will give the probability of all the words being chosen next in the available vocabulary. For example, given a series of words $w_{1:(t-1)} = (w_1,...,w_{t-1})$, a language model will give us the probability of all words in its vocabulary $V$ to appear next to the series of words.
+$$
+P(w_t | w_{1:(t-1)}), \ \ \ \ \ \ \ w_1,...,w_{t-1}\in V
+$$
+
+So if we want our model to complete our sentence, we select the word which has the highest probability and then put that word to the series of words and then use the model again to generate the next word. So the essence of a language model is to simply imitate how a human would respond to different prompts.
+
+To give an idea of what a language model can do, let us look at the ChatGPT, see @fig-gpt, which is an artificial intelligence (AI) chatbot that is developed by OpenAI last November 2022.
+ 
+![Example of a language model (ChatGPT)](Figures_LLM/chat_gpt_sample.gif){#fig-gpt}
+
+We asked the AI to explain quantum computing in simple terms and we see how it was able to provide an extensive discsussion of what quantum computing is. Now, the reason why these AI chatbots are gaining such traction is that it serves as a good starting point when writing or when you want to gain a better understanding of topics that were not discussed properly for example. 
+
+
+## Neural Network-Based Language Model (Types of Language Models)
+
+ChatGPT is an example of a generative pre-trained transformer (GPT) which is a type of language model that relies on deep learning that generates texts based on a given input text.  
+
+
+## Evolution of Language Models
+
+## Training Language Models
+Focusing on the transformer models, we need to know how the neural network model is being trained: including the *pre-training* and *fine-tuning* processes. In pre-training process, we provide a general language model that has a good understarding of how language is being used in a variety of settings. 
+
+For a neural network, we use $n$ inputs and then it is processed in several hidden layers until it reaches an output layer. Ideally, we want the output of our neural network to be close to the actual/real output. If that is not the case, then we use **gradient descent** to change the parameters to reduce the loss function of our network. In gradient descent, what happens is we use the output and compute some values and then feed it back to our hidden layers until the loss is minimized, which is why the process is also called backpropagation, see @fig-neural.
+
+![Simplified Neural Network](Figures_LLM/neural_network.png){#fig-neural}
+
+One problem of the neural network above is that the input size is fixed and in general, we would want to process input sizes that are longer or shorter. Now in the field of language moelling, there are two types of networks that were considered state of the art: *recurrent neural networks* and *long short-term memory networks*.
+
+#### Recurrent neural networks (RNNs)
+
+In a recurrent neural network, we still have the same neural network discussed above to every word in a series of words. Whats different for RNNs is that last word (newest word) in the sequence of words has the most influence in choosing the next word and the probability of influence of previous words reduce exponentially as new words are being introduced. This makes sense but the problem is, language in itself is more nuanced in the sense that sometimes we need to take into account not only the last word in our sentence but the sentence as a whole. Because of this unique feature of language, the concept of older worlds having less influence becomes a bug and is called the *vanishing gradients* problem
+
+#### Long short-term memory (LSTM) networks
+
+For a demonstration of a line plot on a polar axis, see @fig-polar.
+
+```{python}
+#| label: fig-polar
+#| fig-cap: "A line plot on a polar axis"
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+r = np.arange(0, 2, 0.01)
+theta = 2 * np.pi * r
+fig, ax = plt.subplots(
+  subplot_kw = {'projection': 'polar'} 
+)
+ax.plot(theta, r)
+ax.set_rticks([0.5, 1, 1.5, 2])
+ax.grid(True)
+plt.show()
 ```
----
-title: your title
----
-```
-and the first header will be the 2nd level, so `## `. Note, there are situations where you leave off
-```
----
-title: your title
----
-```
-and start the qmd file with a level header `# `, but if using the default title yaml (in the `---` fence) is a good habit since it makes it easy for Quarto convert your qmd file to other formats (like into a presentation).
-
-## Add your pages the project
-
-* Add the files to `_quarto.yml`
