@@ -171,7 +171,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../content/language-model.html" class="sidebar-item-text sidebar-link active">Add content</a>
+  <a href="../content/language-model.html" class="sidebar-item-text sidebar-link active">Language Models</a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -257,11 +257,26 @@ P(w_t | w_{1:(t-1)}), \ \ \ \ \ \ \ w_1,...,w_{t-1}\in V
 <p>One problem of the neural network above is that the input size is fixed and in general, we would want to process input sizes that are longer or shorter. Now in the field of language moelling, there are two types of networks that were considered state of the art: <em>recurrent neural networks</em> and <em>long short-term memory networks</em>.</p>
 <section id="recurrent-neural-networks-rnns" class="level4">
 <h4 class="anchored" data-anchor-id="recurrent-neural-networks-rnns">Recurrent neural networks (RNNs)</h4>
-<p>In a recurrent neural network, we still have the same neural network discussed above to every word in a series of words. Whats different for RNNs is that last word (newest word) in the sequence of words has the most influence in choosing the next word and the probability of influence of previous words reduce exponentially as new words are being introduced. This makes sense but the problem is, language in itself is more nuanced in the sense that sometimes we need to take into account not only the last word in our sentence but the sentence as a whole. Because of this unique feature of language, the concept of older worlds having less influence becomes a bug and is called the <em>vanishing gradients</em> problem</p>
+<p>In a recurrent neural network, we still have the same neural network discussed above to every word in a series of words. Whats different for RNNs is that last word (newest word) in the sequence of words has the most influence in choosing the next word and the probability of influence of previous words reduce exponentially as new words are being introduced. We see in <a href="#fig-rnn">Figure&nbsp;3</a> how RNNs are able to connect information (or words) in a sequential manner.</p>
+<div id="fig-rnn" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Figures_LLM/rnn.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3: Recurring Neural Network</figcaption><p></p>
+</figure>
+</div>
+<p>This makes sense but the problem is, language in itself is more nuanced in the sense that sometimes we need to take into account not only the last word in our sentence but the sentence as a whole. For example, in <a href="#fig-rnn">Figure&nbsp;3</a>, if we need the output <span class="math inline">\(h_{10}\)</span>, the information from the input <span class="math inline">\(x_1\)</span> has very little effect on the output and this might pose a problem if we are for example dealing with a sentence whose subject and verb are very far from each other. Because of this unique feature of language, the concept of older worlds having less influence becomes a bug and is called the <em>vanishing gradients</em> problem</p>
 </section>
 <section id="long-short-term-memory-lstm-networks" class="level4">
 <h4 class="anchored" data-anchor-id="long-short-term-memory-lstm-networks">Long short-term memory (LSTM) networks</h4>
-<p>For a demonstration of a line plot on a polar axis, see <a href="#fig-polar">Figure&nbsp;3</a>.</p>
+<p>Now LSTMs solve the <em>vanishing gradients</em> problem by introducing a “memory” state whose influence is determined by gates defined by more learnable parameters. The main difference of LSTM fromm RNN is that the former type of network remembers information for long periods of time by default but has there functions, called gates that can either use the information stored to process the output or to “forget” the previous information and not use for the output.</p>
+<div id="fig-lstm" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Figures_LLM/lstm.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;4: Long Short-Term Memory Network</figcaption><p></p>
+</figure>
+</div>
+<p>In an LSTM network, there are three gates that are needed to pass through. First is the gate that chooses which information to forget, then the second gate decides which information to store. In the second gate, we have two functions which decides which values will be updated and what values will be used to update. Lastly, the third gate will decide which information will be the output.</p>
+<p>For a demonstration of a line plot on a polar axis, see <a href="#fig-polar">Figure&nbsp;5</a>.</p>
 <div class="cell" data-execution_count="1">
 <details>
 <summary>Code</summary>
@@ -282,7 +297,7 @@ P(w_t | w_{1:(t-1)}), \ \ \ \ \ \ \ w_1,...,w_{t-1}\in V
 <div id="fig-polar" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="language-model_files/figure-html/fig-polar-output-1.png" width="450" height="439" class="figure-img"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;3: A line plot on a polar axis</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5: A line plot on a polar axis</figcaption><p></p>
 </figure>
 </div>
 </div>
