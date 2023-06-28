@@ -79,6 +79,12 @@ Tokenization is the process of converting words or any natural language to token
 - Subword-based: Split words into subwords. Example would be "o c ca sion".
 - Character-based: Split sentence into individual characters.
 
+For example,  taking the sentence "Once again Mr. Costner has dragged out a movie for far longer than necessary." 
+
+Using the ``fastai`` module in Python, we can implement the following types of tokenization. For the word-based tokenization, we use the following block of following code:
+
+{{< embed nlp_beginners.ipynb#species-counts echo=true >}}
+
 ```{python}
 from fastai.text.all import *
 path = untar_data(URLs.IMDB)
