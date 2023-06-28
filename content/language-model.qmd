@@ -84,23 +84,3 @@ For example,  taking the sentence "Once again Mr. Costner has dragged out a movi
 Using the ``fastai`` module in Python, we can implement the following types of tokenization. For the word-based tokenization, we use the following block of following code:
 
 {{< embed nlp_beginners.ipynb#word-tokenizer echo=true >}}
-
-For a demonstration of a line plot on a polar axis, see @fig-polar.
-
-```{python}
-#| label: fig-polar
-#| fig-cap: "A line plot on a polar axis"
-
-import numpy as np
-import matplotlib.pyplot as plt
-
-r = np.arange(0, 2, 0.01)
-theta = 2 * np.pi * r
-fig, ax = plt.subplots(
-  subplot_kw = {'projection': 'polar'} 
-)
-ax.plot(theta, r)
-ax.set_rticks([0.5, 1, 1.5, 2])
-ax.grid(True)
-plt.show()
-```
