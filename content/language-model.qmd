@@ -4,7 +4,7 @@ author: Kenneth Leo
 bibliography: references.bib
 format:
   html:
-    code-fold: true
+    code-fold: false
 jupyter: python3
 ---
 
@@ -83,6 +83,33 @@ For example,  taking the sentence "Once again Mr. Costner has dragged out a movi
 
 Using the ``fastai`` module in Python, we can implement the following types of tokenization. For the word-based tokenization, we use the following block of following code:
 
-{{< embed nlp_beginners.ipynb#word-tokenizer echo=true >}}
+{{< embed nlp_beginners.ipynb#word-tokenizer echo=false >}}
 
-{{< embed penguins.ipynb#fig-bill-marginal >}}
+```{python}
+#| label: fig-polar
+#| fig-cap: "A line plot on a polar axis"
+
+import numpy as np
+import matplotlib.pyplot as plt
+from fastai.text.all import *
+path = untar_data(URLs.IMDB)
+
+files = get_text_files(path, folders = ['train', 'test', 'unsup'])
+txt = files[0].open().read()
+
+spacy = WordTokenizer()
+toks = first(spacy([txt[:77]]))
+print(coll_repr(toks, 30))
+
+
+
+r = np.arange(0, 2, 0.01)
+theta = 2 * np.pi * r
+fig, ax = plt.subplots(
+  subplot_kw = {'projection': 'polar'} 
+)
+ax.plot(theta, r)
+ax.set_rticks([0.5, 1, 1.5, 2])
+ax.grid(True)
+plt.show()
+```
