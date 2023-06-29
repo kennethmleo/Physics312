@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Kenneth Leo">
 
-<title>Physics 312 - Advanced Mathematical Physics II - Acknowledgments</title>
+<title>Physics 312 - Advanced Mathematical Physics II - Diffusion Models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,6 +31,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../content/customizing.html" rel="next">
+<link href="../content/language-model.html" rel="prev">
 <link href="../images/favicon.ico" rel="icon">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -71,7 +74,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Acknowledgments</h1>
+      <h1 class="quarto-secondary-nav-title">Diffusion Models</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -109,7 +112,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../content/diffusion.html" class="sidebar-item-text sidebar-link">Diffusion Models</a>
+  <a href="../content/diffusion.html" class="sidebar-item-text sidebar-link active">Diffusion Models</a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -122,20 +125,32 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#diffusion-models-simplified" id="toc-diffusion-models-simplified" class="nav-link active" data-scroll-target="#diffusion-models-simplified">Diffusion Models: Simplified</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/kennethmleo/Physics312/edit/main/content/diffusion.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/kennethmleo/Physics312/blob/main/content/diffusion.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/kennethmleo/Physics312/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Acknowledgments</h1>
+<h1 class="title d-none d-lg-block">Diffusion Models</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Kenneth Leo </p>
+          </div>
+  </div>
     
   
     
@@ -144,9 +159,61 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>This repo and GitHub Action was based on the tutorial by Openscapes <a href="https://github.com/Openscapes/quarto-website-tutorial">quarto-website-tutorial</a> by Julia Lowndes and Stefanie Butland.</p>
+<section id="diffusion-models-simplified" class="level2">
+<h2 class="anchored" data-anchor-id="diffusion-models-simplified">Diffusion Models: Simplified</h2>
+<p>To understand diffusion models, the article titled “The Physics Principle That Inspired Modern AI Art” described the process best.</p>
+<p>Suppose we have a grayscale image consisting of two pixels, with different grayscale values. If we plot the 2D plot of this, with each axis representing the grayscale values, we get a single point.</p>
+<div id="fig-simplified_diffusion" class="quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-bottom">
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-trial_image" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="diffusion_model_files/trial_image_1.png" class="img-fluid figure-img" data-ref-parent="fig-simplified_diffusion"></p>
+<p></p><figcaption class="figure-caption">(a) 2 Pixel Image</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-hanno" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="diffusion_model_files/trial_image_1_2D.png" class="img-fluid figure-img" data-ref-parent="fig-simplified_diffusion"></p>
+<p></p><figcaption class="figure-caption">(b) 2D plot of image</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Simplified Image using an image with 2 pixels having different grayscale values</figcaption><p></p>
+</figure>
+</div>
+<p>If we have let’s say 20 grayscale images consisting of two pixels each and plot the grayscale values in the 2D plot, we notice that some points are closer to each other than other points. Then we can actually use this 2D plot to generate a 2D probability distribution function such that if we want to generate a new image, we just select a point from our distribution function and the result will give us the values of the pixels of our image, which is a combination of all the images from where we got the probability distribution from, with the images that clustered together having the highest similarity.</p>
+<div id="fig-simplified_diffusion" class="quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-bottom">
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-group" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="diffusion_model_files/group_of_images.png" class="img-fluid figure-img" data-ref-parent="fig-simplified_diffusion"></p>
+<p></p><figcaption class="figure-caption">(a) 2 Pixel Image</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-group_2D" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="diffusion_model_files/group_of_images_2D.png" class="img-fluid figure-img" data-ref-parent="fig-simplified_diffusion"></p>
+<p></p><figcaption class="figure-caption">(b) 2D plot of image</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2: Multiple 2 pixel images with corresponding 2D plot</figcaption><p></p>
+</figure>
+</div>
+<p>If we extend this to an actual image, we get an N-D plot depending on the number of pixels of our image, with the simplified explanation still holding true. And the challenge now for researchers is how to generate this complicated probability distribution function.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -397,6 +464,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../content/language-model.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Language Models</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../content/customizing.html" class="pagination-link">
+        <span class="nav-page-text">Customizing</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">

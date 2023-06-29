@@ -94,7 +94,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../content/customizing.html" rel="next">
+<link href="../content/diffusion.html" rel="next">
 <link href="../index.html" rel="prev">
 <link href="../images/favicon.ico" rel="icon">
 <script src="../site_libs/quarto-html/quarto.js"></script>
@@ -176,6 +176,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../content/diffusion.html" class="sidebar-item-text sidebar-link">Diffusion Models</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../content/customizing.html" class="sidebar-item-text sidebar-link">Customizing</a>
   </div>
 </li>
@@ -190,10 +195,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#what-is-a-language-model" id="toc-what-is-a-language-model" class="nav-link active" data-scroll-target="#what-is-a-language-model">What is a language model?</a></li>
   <li><a href="#neural-network-based-language-model-types-of-language-models" id="toc-neural-network-based-language-model-types-of-language-models" class="nav-link" data-scroll-target="#neural-network-based-language-model-types-of-language-models">Neural Network-Based Language Model (Types of Language Models)</a></li>
-  <li><a href="#training-language-models" id="toc-training-language-models" class="nav-link" data-scroll-target="#training-language-models">Training Language Models</a>
-  <ul class="collapse">
+  <li><a href="#training-language-models" id="toc-training-language-models" class="nav-link" data-scroll-target="#training-language-models">Training Language Models</a></li>
   <li><a href="#different-things-models-for-nlp-can-do" id="toc-different-things-models-for-nlp-can-do" class="nav-link" data-scroll-target="#different-things-models-for-nlp-can-do">Different things models for NLP can do!</a></li>
-  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/kennethmleo/Physics312/edit/main/content/language-model.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/kennethmleo/Physics312/blob/main/content/language-model.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/kennethmleo/Physics312/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -322,8 +325,9 @@ Once again Mr. Costner has dragged out a movie for far longer than necessary.
 <p>Tokenization is an important step in the neural network architecture since it converts the natural language that we understand to these tokens that can be understood by our machines after converter them to numbers, a process called <strong>Numericalization</strong> which can also be done using the <code>fastai</code> module.</p>
 <p>Now that we have the numbers that our computer can process, we can actually now split them into 3 batches: training, validating, and testing batches. We put the training batch in a chosen language model and then validate the results. Now after training our model, we can now actually specify the things that our model can do. In the following chapter, we discuss some of the things that language models can actually do.</p>
 </section>
-<section id="different-things-models-for-nlp-can-do" class="level3">
-<h3 class="anchored" data-anchor-id="different-things-models-for-nlp-can-do">Different things models for NLP can do!</h3>
+</section>
+<section id="different-things-models-for-nlp-can-do" class="level2">
+<h2 class="anchored" data-anchor-id="different-things-models-for-nlp-can-do">Different things models for NLP can do!</h2>
 <p><strong>Text Classification</strong></p>
 <p>There are two types of classification wherein NLP models are very useful for: binary classification and multi-label classification. Binary classification is useful in sentiment analysis where texts can be labeled as something <code>good</code> or <code>bad</code> which can help informed decisions in fields like politics, and marketing. Multi-label classification on the other hand is useful in organizing and filtering tons of information in social media and news for example.</p>
 <p><strong>Token Classification</strong></p>
@@ -341,7 +345,6 @@ Once again Mr. Costner has dragged out a movie for far longer than necessary.
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -600,8 +603,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../content/customizing.html" class="pagination-link">
-        <span class="nav-page-text">Customizing</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../content/diffusion.html" class="pagination-link">
+        <span class="nav-page-text">Diffusion Models</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
