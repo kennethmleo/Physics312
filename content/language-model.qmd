@@ -101,7 +101,7 @@ Tokenization is an important step in the neural network architecture since it co
 
 Now that we have the numbers that our computer can process, we can actually now split them into 3 batches: training, validating, and testing batches. We put the training batch in a chosen language model and then validate the results. Now after training our model, we can now actually specify the things that our model can do. In the following chapter, we discuss some of the things that language models can actually do.
 
-### Different things models for NLP can do!
+## Different things models for NLP can do!
 
 __Text Classification__ 
 
