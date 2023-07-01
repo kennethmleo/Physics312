@@ -300,13 +300,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p>If we extend this to an actual image, we get an N-D plot depending on the number of pixels of our image, with the simplified explanation still holding true. And the challenge now for researchers is how to generate this complicated probability distribution function.</p>
-<p><em>Pitfall encoutered:</em> Images formed just looked like blobs, but still cool! The general ‘shape’ was there, but in blob form</p>
+<p><em>Pitfall encoutered:</em> Images formed just looked like blobs, but still cool! The general ‘shape’ was there, but in blob form.</p>
 </section>
 <section id="model-based-on-estimating-gradients-of-data-distribution" class="level2">
 <h2 class="anchored" data-anchor-id="model-based-on-estimating-gradients-of-data-distribution">Model based on Estimating Gradients of Data Distribution</h2>
+<p>Instead of estimating the probability distribution of the data, this model estimated the <em>gradient</em> of the distribution. Here is a quick summary of how the model was done:</p>
+<ol type="1">
+<li>Perturb image with random Gaussian noise of various magnitude</li>
+</ol>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cv2</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> cv2.imread(<span class="st">'test_image.jpg'</span>)[...,::<span class="op">-</span><span class="dv">1</span>]<span class="op">/</span><span class="fl">255.0</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>noise <span class="op">=</span>  np.random.normal(loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>img.shape)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>levels <span class="op">=</span> [<span class="dv">0</span>,<span class="fl">0.2</span>,<span class="fl">0.4</span>,<span class="fl">0.6</span>,<span class="fl">0.8</span>]</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">3</span><span class="op">*</span><span class="dv">5</span>,<span class="dv">4</span>))</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>noise_used <span class="op">=</span> (noise <span class="op">-</span> noise.<span class="bu">min</span>())<span class="op">/</span>(noise.<span class="bu">max</span>()<span class="op">-</span>noise.<span class="bu">min</span>())</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">1</span>,<span class="dv">6</span>,<span class="dv">1</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>plt.imshow(noise_used)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'noise'</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>plt.xticks([])</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>plt.yticks([])</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i,j <span class="kw">in</span> <span class="bu">enumerate</span>(levels):</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    noisy_img <span class="op">=</span> np.clip((img <span class="op">+</span> noise<span class="op">*</span>j),<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    plt.subplot(<span class="dv">1</span>,<span class="dv">6</span>,i<span class="op">+</span><span class="dv">2</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    plt.imshow(noisy_img)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">'noise = '</span><span class="op">+</span> <span class="bu">str</span>(levels[i]))</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    plt.xticks([])</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    plt.yticks([])</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="diffusion_files/figure-html/cell-4-output-1.png" width="1135" height="252"></p>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Use trained neural network to predict the original image using the gradient of the distribution of the noisy images (process looks like the inverse of the plots above).</li>
+</ol>
+<p><em>Pitfall encountered:</em> Though the images predicted are of good quality, the computational time it took was very long.</p>
 </section>
 <section id="denoising-diffusion-probabilistic-models" class="level2">
 <h2 class="anchored" data-anchor-id="denoising-diffusion-probabilistic-models">Denoising Diffusion Probabilistic Models</h2>
+<p>In this final paper, the two models discussed above were combined. What happens here is that from a noisy blob of data, we get a recognizable image.</p>
 
 
 </section>
