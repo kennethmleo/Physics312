@@ -2,46 +2,50 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://kennethmleo.github.io/Physics312/content/acknowledgements.html</loc>
-    <lastmod>2023-07-01T07:11:39.058Z</lastmod>
+    <lastmod>2023-07-02T13:31:11.775Z</lastmod>
   </url>
   <url>
     <loc>https://kennethmleo.github.io/Physics312/content/customizing.html</loc>
-    <lastmod>2023-07-01T07:11:39.514Z</lastmod>
+    <lastmod>2023-07-02T13:31:12.211Z</lastmod>
   </url>
   <url>
     <loc>https://kennethmleo.github.io/Physics312/content/diffusion.html</loc>
-    <lastmod>2023-07-01T07:12:28.050Z</lastmod>
+    <lastmod>2023-07-02T13:32:27.111Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kennethmleo.github.io/Physics312/content/hyperspectral_trial.html</loc>
+    <lastmod>2023-07-02T13:32:27.650Z</lastmod>
   </url>
   <url>
     <loc>https://kennethmleo.github.io/Physics312/content/hyperspectral_unmixing.html</loc>
-    <lastmod>2023-07-01T07:12:32.644Z</lastmod>
+    <lastmod>2023-07-02T13:32:35.553Z</lastmod>
   </url>
   <url>
     <loc>https://kennethmleo.github.io/Physics312/content/language-model.html</loc>
-    <lastmod>2023-07-01T07:12:42.417Z</lastmod>
+    <lastmod>2023-07-02T13:32:48.535Z</lastmod>
   </url>
   <url>
     <loc>https://kennethmleo.github.io/Physics312/content/language_model.html</loc>
-    <lastmod>2023-07-01T07:12:42.931Z</lastmod>
+    <lastmod>2023-07-02T13:32:49.328Z</lastmod>
   </url>
   <url>
     <loc>https://kennethmleo.github.io/Physics312/content/nlp_beginners.html</loc>
-    <lastmod>2023-07-01T07:12:43.409Z</lastmod>
+    <lastmod>2023-07-02T13:32:49.923Z</lastmod>
   </url>
   <url>
     <loc>https://kennethmleo.github.io/Physics312/content/penguins.html</loc>
-    <lastmod>2023-07-01T07:12:43.898Z</lastmod>
+    <lastmod>2023-07-02T13:32:50.489Z</lastmod>
   </url>
   <url>
     <loc>https://kennethmleo.github.io/Physics312/content/publishing.html</loc>
-    <lastmod>2023-07-01T07:12:44.348Z</lastmod>
+    <lastmod>2023-07-02T13:32:51.036Z</lastmod>
   </url>
   <url>
     <loc>https://kennethmleo.github.io/Physics312/content/rendering.html</loc>
-    <lastmod>2023-07-01T07:12:44.762Z</lastmod>
+    <lastmod>2023-07-02T13:32:51.624Z</lastmod>
   </url>
   <url>
     <loc>https://kennethmleo.github.io/Physics312/index.html</loc>
-    <lastmod>2023-07-01T07:12:45.133Z</lastmod>
+    <lastmod>2023-07-02T13:32:52.131Z</lastmod>
   </url>
 </urlset>
