@@ -349,7 +349,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="denoising-diffusion-probabilistic-models" class="level2">
 <h2 class="anchored" data-anchor-id="denoising-diffusion-probabilistic-models">Denoising Diffusion Probabilistic Models</h2>
 <p>In this final paper, the two models discussed above were combined. What happens here is that from a noisy blob of data, we get a recognizable image. What happens in this model is that, there is a forward and a backward process.</p>
-<p>In the forward process, we introduce an increasing Gaussian noise to all our data. Then we train our model with the data with increasing Gaussian noise.</p>
 <div class="cell" data-execution_count="4">
 <details>
 <summary>Code</summary>
@@ -469,13 +468,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="diffusion_files/figure-html/cell-5-output-1.png" width="667" height="416"></p>
 </div>
 </div>
-<p>Here is how the backward process looks like. What happens here is that, the images in our dataset will look like noisy blobs and what the model does is combine these blobs and we sample it. After that, we denoise it slowly to get the original image or our desired image.</p>
+<p>Y</p>
 <div id="fig-swirl" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="animation.gif" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;1: Example of backward process</figcaption><p></p>
 </figure>
 </div>
+<p>To explain the process of this paper, here are the important steps that I have noted and I think are important: 1. Starting with the “real images”, we can get a real data distribution from these set of images. We can then sample this dataset to get an image for example. 2. Define forward diffusion process, that is, adding a Gaussian noise at each time step t, with a mean and variance value. 3. Use a neural network that is trained using the images with gaussian noise added to them and basically learn (represent) the mean and variance of the probability distribution. In the original paper, the variance was fixed and only the mean changes.</p>
 </section>
 <section id="sample-images-with-their-prompts" class="level2">
 <h2 class="anchored" data-anchor-id="sample-images-with-their-prompts">Sample Images with their prompts</h2>
