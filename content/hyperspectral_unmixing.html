@@ -220,6 +220,12 @@ div.csl-indent {
   <li><a href="#hyperspectral-unmixing" id="toc-hyperspectral-unmixing" class="nav-link active" data-scroll-target="#hyperspectral-unmixing">Hyperspectral Unmixing</a></li>
   <li><a href="#principal-component-analysis" id="toc-principal-component-analysis" class="nav-link" data-scroll-target="#principal-component-analysis">Principal Component Analysis</a></li>
   <li><a href="#endmember-extraction-methods-with-pure-pixels" id="toc-endmember-extraction-methods-with-pure-pixels" class="nav-link" data-scroll-target="#endmember-extraction-methods-with-pure-pixels">Endmember Extraction Methods (with pure pixels)</a></li>
+  <li><a href="#endmember-extraction-methods-without-pure-pixels" id="toc-endmember-extraction-methods-without-pure-pixels" class="nav-link" data-scroll-target="#endmember-extraction-methods-without-pure-pixels">Endmember Extraction Methods (without pure pixels)</a>
+  <ul class="collapse">
+  <li><a href="#endmembers-versus-archetypes." id="toc-endmembers-versus-archetypes." class="nav-link" data-scroll-target="#endmembers-versus-archetypes.">Endmembers versus archetypes.</a></li>
+  </ul></li>
+  <li><a href="#abundance-estimation-and-error-minimization" id="toc-abundance-estimation-and-error-minimization" class="nav-link" data-scroll-target="#abundance-estimation-and-error-minimization">Abundance Estimation and Error Minimization</a></li>
+  <li><a href="#applications-of-hyperspectral-unmixing" id="toc-applications-of-hyperspectral-unmixing" class="nav-link" data-scroll-target="#applications-of-hyperspectral-unmixing">Applications of Hyperspectral Unmixing</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/kennethmleo/Physics312/edit/main/content/hyperspectral_unmixing.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/kennethmleo/Physics312/blob/main/content/hyperspectral_unmixing.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/kennethmleo/Physics312/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -255,9 +261,15 @@ div.csl-indent {
 <div id="fig-hyperspectral" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="hyperspectral_unmixing.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;1: Hyperspectral unmixing concept in the remote sensing applicative context (<span class="citation" data-cites="DOBIGEON2016185">Dobigeon et al. (<a href="#ref-DOBIGEON2016185" role="doc-biblioref">2016</a>)</span>)</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Hyperspectral unmixing concept in the remote sensing applicative context (<span class="citation" data-cites="DOBIGEON2016185">(<a href="#ref-DOBIGEON2016185" role="doc-biblioref">Dobigeon et al. 2016</a>)</span>)</figcaption><p></p>
 </figure>
 </div>
+<p>So in general, there are three steps in hyperspectral unmixing:</p>
+<ol type="1">
+<li>Endmember selection</li>
+<li>Abundance estimation</li>
+<li>Error minimization</li>
+</ol>
 </section>
 <section id="principal-component-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="principal-component-analysis">Principal Component Analysis</h2>
@@ -343,20 +355,20 @@ div.csl-indent {
 <section id="endmember-extraction-methods-with-pure-pixels" class="level2">
 <h2 class="anchored" data-anchor-id="endmember-extraction-methods-with-pure-pixels">Endmember Extraction Methods (with pure pixels)</h2>
 <ol type="1">
-<li>Pixel Purity Index</li>
+<li>Pixel Purity Index <span class="citation" data-cites="8080725">(<a href="#ref-8080725" role="doc-biblioref">Heylen and Scheunders 2013</a>)</span></li>
 </ol>
 <ul>
 <li>From what I understood, you can identify which pixels of an image is “pure”. So for example, in an image, a pixel that only contain a cloud particle can be thought of as a “pure cloud pixel”. The existence of these pure pixels and a pure pixel index scores is important in a sense that only pixels whose PPI scores under a certain threshold are considered as endmembers.</li>
 <li>This algorithm is one of the endmember extraction algorithm made that is still very popular up to this day.</li>
 </ul>
 <ol start="2" type="1">
-<li>N-FINDR Algorithm MVSA/MVES:</li>
+<li>N-FINDR Algorithm</li>
 </ol>
 <ul>
 <li>For this algorithm, we reduce the dimensionality of the data using princpical component analysis. The number of endmembers is equal to the number of principal components in this algorithm. This algorithm is an iterative approach where the volume of a simplex formed by endmembers are maximized.</li>
 </ul>
 <ol start="3" type="1">
-<li>Orthogonal Subspace Projection</li>
+<li>Orthogonal Subspace Projection <span class="citation" data-cites="Chang_2005">(<a href="#ref-Chang_2005" role="doc-biblioref">Chang 2005</a>)</span></li>
 </ol>
 <ul>
 <li>The essence of this algorithm is that two spectral bands are separated such that these two bands are as orthogonal to each other. If this is the case, that means one band will not share its information with another band. A requirement for this to work is that the number of spectral bands should be less than the target signature of interest.</li>
@@ -364,13 +376,18 @@ div.csl-indent {
 <ol start="4" type="1">
 <li>Vertex Component Analysis</li>
 </ol>
-<p><em>Pitfall/s:</em> Realistically speaking, pure pixels dont exist. This is why we have algorithms that assumes the absence of pure pixels. ## Endmember Extraction Methods (without pure pixels)</p>
-<p>For this part, I’m just going to copy what the ParTI website said because I have understood that well and I think they were able to summarize and discuss everything in this part.</p>
+<p><em>Pitfall/s:</em> Realistically speaking, pure pixels dont exist. This is why we have algorithms that assumes the absence of pure pixels.</p>
+</section>
+<section id="endmember-extraction-methods-without-pure-pixels" class="level2">
+<h2 class="anchored" data-anchor-id="endmember-extraction-methods-without-pure-pixels">Endmember Extraction Methods (without pure pixels)</h2>
+<p>For this part, I’m just going to copy what the ParTI website said because I have understood that well and I think they were able to summarize and discuss everything in this part (<span class="citation" data-cites="NA_2022">(<a href="#ref-NA_2022" role="doc-biblioref">N/A 2022</a>)</span>). Other discussions are summarized from multiple papers and online articles I have read trying to understand each algorithms.</p>
+<p>When there are no pure pixels algorithms used are going to be minimum volume-based but with different approaches.</p>
 <ol type="1">
 <li>SISAL (Simple Identification via variable Splitting and augmented Lagrangian)</li>
 </ol>
 <ul>
 <li>Minimizes the volume of the simplex that encapsulates the data. It is resilient to noise and outliers - data points can end outside of the simplex. Usually archetype are located outside the data.</li>
+<li>Basically, SISAL is useful in applications where there is a required constrained optimization. From the name itself, SISAL splits the unmixing process into two parts: a variable the represents the abundance of the endmembers in each pixel and a variable that helps hold constraints (non-negative abundance or sum-to-one). Now for the second part of the name, SISAL constructs an augmented Lagragian such that it applies a penalty that is based on the optimization algorithm. This will then be used to guide the optimization process. The algorithm will then iterate based on an error criterion or a set number of iterations. In each iteration, the abundance of each endmember will be calculated and updated based on the penalty and constraints given.</li>
 </ul>
 <ol start="2" type="1">
 <li>MVSA/MVES (Minimum Volume Simplex Analysis/Minimum Volume Enclosing Simplex)</li>
@@ -392,14 +409,42 @@ div.csl-indent {
 </ul>
 <p>For large datasets of thousands data points, the three minimal bounding simplex algorithms (SISAL, MVSA and MVES) give very similar results. We found that the SISAL algorithm performs best since it takes good care of outliers in the dataset and gives the tightest simplex enclosing most of the data points. It is then also natural to use SISAL for calculation of the simplex statistical significance.</p>
 <p>However, when the number of data points is on the order of a hundred or less, the SISAL algorithm might ignore important points when calculating the enclosing simplex. This is most relevant when calculating the statistical significance of the simplex. In such cases we used the MVSA algorithm.</p>
+<section id="endmembers-versus-archetypes." class="level3">
+<h3 class="anchored" data-anchor-id="endmembers-versus-archetypes.">Endmembers versus archetypes.</h3>
+<p>Okay so here, I got confused when I was reading the slides and other papers (Cricri’s SPP paper about voting patterns). So I did more research about the difference of endmembers and archetypes. From what I read, endmembers are these materials in the hyperspectral image, trees, rocks, clouds, etc. These endmembers now have a spectra which we call the endmember signature. Each pixel in our image is then represented by a linear combination of these endmembers with their respective abundance values.</p>
+<p><span class="math display">\[
+\text{pixel} = \text{endmember}_1 * \text{abundance}_1 + \text{endmember}_2 * \text{abundance}_2 + ... + \text{endmember}_n * \text{abundance}_n
+\]</span></p>
+<p>Archetypes, on the other hand, are the spectral signatures of endmembers. That means they can be a combination of multiple endmembers. For example, one archetype can represent a group of trees. Archetypes are more useful to represent more complex materials with different spectral variatons.</p>
+</section>
+</section>
+<section id="abundance-estimation-and-error-minimization" class="level2">
+<h2 class="anchored" data-anchor-id="abundance-estimation-and-error-minimization">Abundance Estimation and Error Minimization</h2>
+<p>After identifying the endmembers of our image, next thing to do is to estimate the fraction of endmembers in each pixel, quantified by abundance. One of the easiest ways to estimate abundance is by least squares. When calculating the abundance, the sum-to-one and non-negative constraints should be considered when calculating the least squares. Now, the process in estimating abundance is iterative such that the reconstruction error (obtained using the endmembers and abundance estimated) is minimized when compared to the original hyperspectral image.</p>
+</section>
+<section id="applications-of-hyperspectral-unmixing" class="level2">
+<h2 class="anchored" data-anchor-id="applications-of-hyperspectral-unmixing">Applications of Hyperspectral Unmixing</h2>
+<p>One of the cool things that we can use hyperspectral unmixing for is to discover voting patterns of people using an election dataset <span class="citation" data-cites="Cricri_spp">(<a href="#ref-Cricri_spp" role="doc-biblioref">Castro and Lim 2020</a>)</span>. In the paper, they were able to identify the archetypes in an election dataset: that is the</p>
 
 
 
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Cricri_spp" class="csl-entry" role="doc-biblioentry">
+Castro, Crizzia Mielle Mariano de, and May Tan Lim. 2020. <span>“Extracting Voting Patterns Across Three Philippine Senate Elections Using Hyperspectral Unmixing.”</span> In <em>Proceedings of the Samahang Pisika Ng Pilipinas</em>, 38:SPP-2020-2A-06. <a href="https://proceedings.spp-online.org/article/view/SPP-2020-2A-06">https://proceedings.spp-online.org/article/view/SPP-2020-2A-06</a>.
+</div>
+<div id="ref-Chang_2005" class="csl-entry" role="doc-biblioentry">
+Chang, Chein-I. 2005. <span>“Orthogonal Subspace Projection (OSP) Revisited: A Comprehensive Study and Analysis.”</span> <em>IEEE Transactions on Geoscience and Remote Sensing</em> 43 (3): 502–18. <a href="https://doi.org/10.1109/tgrs.2004.839543">https://doi.org/10.1109/tgrs.2004.839543</a>.
+</div>
 <div id="ref-DOBIGEON2016185" class="csl-entry" role="doc-biblioentry">
 Dobigeon, N., Y. Altmann, N. Brun, and S. Moussaoui. 2016. <span>“Chapter 6 - Linear and Nonlinear Unmixing in Hyperspectral Imaging.”</span> In <em>Resolving Spectral Mixtures</em>, edited by Cyril Ruckebusch, 30:185–224. Data Handling in Science and Technology. Elsevier. https://doi.org/<a href="https://doi.org/10.1016/B978-0-444-63638-6.00006-1">https://doi.org/10.1016/B978-0-444-63638-6.00006-1</a>.
+</div>
+<div id="ref-8080725" class="csl-entry" role="doc-biblioentry">
+Heylen, Rob, and Paul Scheunders. 2013. <span>“Multi-Dimensional Pixel Purity Index.”</span> In <em>2013 5th Workshop on Hyperspectral Image and Signal Processing: Evolution in Remote Sensing (WHISPERS)</em>, 1–4. <a href="https://doi.org/10.1109/WHISPERS.2013.8080725">https://doi.org/10.1109/WHISPERS.2013.8080725</a>.
+</div>
+<div id="ref-NA_2022" class="csl-entry" role="doc-biblioentry">
+N/A, N/A. 2022. <span>“Pareto Task Inference (Parti) Method.”</span> <em>Uri Alon</em>. https://www.weizmann.ac.il/mcb/UriAlon/download/ParTI.
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
