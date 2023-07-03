@@ -21,6 +21,25 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -129,7 +148,14 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#default-parameters-of-alpaca.cpp" id="toc-default-parameters-of-alpaca.cpp" class="nav-link active" data-scroll-target="#default-parameters-of-alpaca.cpp">Default parameters of alpaca.cpp</a></li>
+  <li><a href="#varying-the-temperature" id="toc-varying-the-temperature" class="nav-link" data-scroll-target="#varying-the-temperature">Varying the temperature</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/kennethmleo/Physics312/edit/main/content/report.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/kennethmleo/Physics312/blob/main/content/report.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/kennethmleo/Physics312/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -157,10 +183,79 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p>For my report, I decided to use the <code>alpaca.cpp</code> and try to explore it a little bit more. Specifically, we look at the different parameters that were used in this language model. For example, temperature is a hyper-parameter used in language model and is often used to control smoothness of a probability distribution of predicted words <span class="citation" data-cites="wang2020contextual">(<a href="#ref-wang2020contextual" role="doc-biblioref">Wang et al. 2020</a>)</span>. When we have a temperature approaching infinity, the distribution becomes uniform and when temperature approaches zero, we get a dirac-delta looking distribution. We can think of is as if we have high temperature, the answers that our chat AI gives becomes varied uniform, but if we have a low temperature, we get one answer almost, if not all, the time.</p>
+<section id="default-parameters-of-alpaca.cpp" class="level2">
+<h2 class="anchored" data-anchor-id="default-parameters-of-alpaca.cpp">Default parameters of alpaca.cpp</h2>
+<p>Here are the parameters that we can actually control in the <code>alpaca.cpp</code> language model. We see that there are actually multiple hyper-parameters that we can try to vary and study its effects. For this report, let us just look at the effects of few parameters.</p>
+<pre><code>  -s SEED, --seed SEED  RNG seed (default: -1)
+  -t N, --threads N     number of threads to use during computation (default: 4)
+  -p PROMPT, --prompt PROMPT
+                        prompt to start generation with (default: random)
+  -f FNAME, --file FNAME
+                        prompt file to start generation.
+  -n N, --n_predict N   number of tokens to predict (default: 128)
+  --top_k N             top-k sampling (default: 40)
+  --top_p N             top-p sampling (default: 0.9)
+  --repeat_last_n N     last n tokens to consider for penalize (default: 64)
+  --repeat_penalty N    penalize repeat sequence of tokens (default: 1.3)
+  -c N, --ctx_size N    size of the prompt context (default: 2048)
+  --temp N              temperature (default: 0.1)
+  -b N, --batch_size N  batch size for prompt processing (default: 8)
+  -m FNAME, --model FNAME
+                        model path (default: ggml-alpaca-7b-q4.bin)
+</code></pre>
+</section>
+<section id="varying-the-temperature" class="level2">
+<h2 class="anchored" data-anchor-id="varying-the-temperature">Varying the temperature</h2>
+<p>Using a low value (<code>temp = 0.01</code>) and a high value (<code>temp = 0.9</code>) for temperature , let us ask <code>alpaca.cpp</code> to describe the color red in three sentences (Thank you ChatGPT for the prompt!). Here are the first five outputs of the model.</p>
+<table class="table">
+<caption><em>Describe the color red in three sentences</em>. {tbl-colwidths=“[50,50]”}<br>
+</caption>
+<colgroup>
+<col style="width: 43%">
+<col style="width: 56%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Temperature = 0.01</th>
+<th>Temperature = 0.9</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>The color red is often associated with energy, passion and intensity. It can be a bold choice for decorating an entire room or simply adding pop of color to accessories like throw pillows or rugs. Its warmth makes it perfect for creating cozy spaces that invite comfort and relaxation.</td>
+<td>The color red is often associated with energy and vitality. Its intensity can be both invigorating and intimidating at times - it’s a striking hue that makes an indelible statement wherever it is used. Red has long been known to symbolize courage, strength and determination; qualities we admire in people as well as objects around us.</td>
+</tr>
+<tr class="even">
+<td>The color red is often associated with energy, passion and intensity. It can be a bold choice for decorating an entire room or simply adding pop of color to accessories like throw pillows or rugs. Its warmth makes it perfect for creating cozy spaces that invite comfort and relaxation.</td>
+<td>Red is a vibrant hue with strong associations - it’s often seen as an expression of passion, energy and courage. In some cultures, it can also symbolize power, strength, and determination. Its warmth makes it ideal for creating a cozy atmosphere in homes or restaurants, while its intensity lends itself to making statements when used on clothing or products.</td>
+</tr>
+<tr class="odd">
+<td>The color red is often associated with energy, passion and intensity. It can be a bold choice for decorating an entire room or simply adding pop to accessories like throw pillows or rugs. Its warmth makes it perfect for creating cozy spaces that invite comfort and relaxation.</td>
+<td>Red is often seen as an expresison of passion and energy due to its warmth and vibrancy. It’s also associated with courage, strenght, determiantion and a few other things related to raw power and emotion. Red can be used on clothing and products to make statements about the person wearing it (or using them) - whether they are bold, confident, daring and so much more!</td>
+</tr>
+<tr class="even">
+<td>The color red is often associated with energy, passion and intensity. It can be a bold choice for decorating an entire room or simply adding pop to accessories like throw pillows or rugs. Its warmth makes it perfect for creating cozy spaces that invite comfort and relaxation.</td>
+<td>The color red has associations with energy, passion and intensity. It can evoke feelings of warmth and excitement as well as alertness and danger. Red is a vibrant ue that stands out from other colors due to its brightness and intensity.</td>
+</tr>
+<tr class="odd">
+<td>The color red is often associated with energy, passion and intensity. It can be a bold choice for decorating an entire room or simply adding pop to accessories like throw pillows or rugs. Its warmth makes it perfect for creating cozy spaces that invite comfort and relaxation.</td>
+<td>Red is often associated with energy, passion, and excitement. It’s also known for being attention-grabbing and can evoke strong emotions depending on how it’s used. Red evokes warmth and a sense of vibrancy that makes it the percent accent color to any design.</td>
+</tr>
+</tbody>
+</table>
+<p>We see from the table above, just from the first five results the difference in the results of <code>alpaca.cpp</code> language model if we vary the temperature. We see that for low temperature results, the results are repetitive and that the sentences formed are not that ‘creative’. On the other hand, the results produced by high temperature are more varied and more creative - that is the sentences formed are more “imaginatively” written.</p>
+<p><strong>Key idea</strong>: We see here that a balance of temperature will basically control the level of ‘randomness’ of the results. Now, to make this study more quantitative, its nice to make a measure of creativity.</p>
 
 
 
-</main> <!-- /main -->
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-wang2020contextual" class="csl-entry" role="doc-biblioentry">
+Wang, Pei-Hsin, Sheng-Iou Hsieh, Shih-Chieh Chang, Yu-Ting Chen, Jia-Yu Pan, Wei Wei, and Da-Chang Juan. 2020. <span>“Contextual Temperature for Language Modeling.”</span> <a href="https://arxiv.org/abs/2012.13575">https://arxiv.org/abs/2012.13575</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
