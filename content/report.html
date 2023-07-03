@@ -217,7 +217,7 @@ div.csl-indent {
   <ul>
   <li><a href="#default-parameters-of-alpaca.cpp" id="toc-default-parameters-of-alpaca.cpp" class="nav-link active" data-scroll-target="#default-parameters-of-alpaca.cpp">Default parameters of alpaca.cpp</a></li>
   <li><a href="#varying-the-temperature" id="toc-varying-the-temperature" class="nav-link" data-scroll-target="#varying-the-temperature">Varying the temperature</a></li>
-  <li><a href="#varying-the-top-p" id="toc-varying-the-top-p" class="nav-link" data-scroll-target="#varying-the-top-p">Varying the top-p</a></li>
+  <li><a href="#varying-the-top-k-and-top-p" id="toc-varying-the-top-k-and-top-p" class="nav-link" data-scroll-target="#varying-the-top-k-and-top-p">Varying the top-k and top-p</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/kennethmleo/Physics312/edit/main/content/report.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/kennethmleo/Physics312/blob/main/content/report.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/kennethmleo/Physics312/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -311,8 +311,8 @@ div.csl-indent {
 <p>We see from the table above, just from the first five results the difference in the results of <code>alpaca.cpp</code> language model if we vary the temperature. We see that for low temperature results, the results are repetitive and that the sentences formed are not that ‘creative’. On the other hand, the results produced by high temperature are more varied and more creative - that is the sentences formed are more “imaginatively” written.</p>
 <p><strong>Key idea</strong>: We see here that a balance of temperature will basically control the level of ‘randomness’ of the results. Now, to make this study more quantitative, its nice to make a measure of creativity.</p>
 </section>
-<section id="varying-the-top-p" class="level2">
-<h2 class="anchored" data-anchor-id="varying-the-top-p">Varying the top-p</h2>
+<section id="varying-the-top-k-and-top-p" class="level2">
+<h2 class="anchored" data-anchor-id="varying-the-top-k-and-top-p">Varying the top-k and top-p</h2>
 <p>Now there are two parameters that can also greatly affect the ouput of our language model and these are the <code>top_k</code> and <code>top_p</code> parameters. So given a list of possible next words in a fill in the blank type of sentence, ordered from highest to lowest probability of being chosen, the <code>top_k</code> and <code>top_p</code> parameters control the ‘cut-off’ of which words will be considered in the final list of possible words <span class="citation" data-cites="holtzman2020curious">(<a href="#ref-holtzman2020curious" role="doc-biblioref">Holtzman et al. 2020</a>)</span>.</p>
 <p>I think this is better to be presented using visuals. Suppose we have the prompt “The weather today is ___” and we have 5 possible next words, ordered in decreasing probability of being the actual next word.</p>
 <div class="cell" data-execution_count="1">
@@ -361,15 +361,16 @@ div.csl-indent {
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'Probability'</span>)</span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'Possible next word'</span>)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>ax2.barh(sorted_weather_conditions, sorted_frequency, color <span class="op">=</span> c_p[::<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">'Probability'</span>)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'$top_k = 2'</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>ax2.barh(sorted_weather_conditions, sorted_frequency, color <span class="op">=</span> c_p[::<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">'Probability'</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="report_files/figure-html/cell-3-output-1.png" width="837" height="429"></p>
+<p><img src="report_files/figure-html/cell-3-output-1.png" width="837" height="449"></p>
 </div>
 </div>
 <p>So we see from the discussion above that aside from temperature, top-k and top-p values are also need to be considered when tweaking the language model.</p>
