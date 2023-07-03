@@ -183,6 +183,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="../content/hyperspectral_unmixing.html" class="sidebar-item-text sidebar-link">Hyperspectral Unmixing</a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../content/report.html" class="sidebar-item-text sidebar-link">Report</a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -475,7 +480,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p></p><figcaption class="figure-caption">Figure&nbsp;1: Example of backward process</figcaption><p></p>
 </figure>
 </div>
-<p>To explain the process of this paper, here are the important steps that I have noted and I think are important: 1. Starting with the “real images”, we can get a real data distribution from these set of images. We can then sample this dataset to get an image for example. 2. Define forward diffusion process, that is, adding a Gaussian noise at each time step t, with a mean and variance value. 3. Use a neural network that is trained using the images with gaussian noise added to them and basically learn (represent) the mean and variance of the probability distribution. In the original paper, the variance was fixed and only the mean changes.</p>
+<p>To explain the process of this paper, here are the important steps that I have noted and I think are important:</p>
+<ol type="1">
+<li>Starting with the “real images”, we can get a real data distribution from these set of images. We can then sample this dataset to get an image for example.</li>
+<li>Define forward diffusion process, that is, adding a Gaussian noise at each time step t, with a mean and variance value.</li>
+<li>Use a neural network that is trained using the images with gaussian noise added to them and basically learn (represent) the mean and variance of the probability distribution. In the original paper, the variance was fixed and only the mean changes.</li>
+</ol>
 </section>
 <section id="sample-images-with-their-prompts" class="level2">
 <h2 class="anchored" data-anchor-id="sample-images-with-their-prompts">Sample Images with their prompts</h2>

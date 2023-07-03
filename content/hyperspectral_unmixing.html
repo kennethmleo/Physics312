@@ -94,6 +94,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../content/report.html" rel="next">
 <link href="../content/diffusion.html" rel="prev">
 <link href="../images/favicon.ico" rel="icon">
 <script src="../site_libs/quarto-html/quarto.js"></script>
@@ -181,6 +182,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../content/hyperspectral_unmixing.html" class="sidebar-item-text sidebar-link active">Hyperspectral Unmixing</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../content/report.html" class="sidebar-item-text sidebar-link">Report</a>
   </div>
 </li>
     </ul>
@@ -309,9 +315,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="endmember-extraction-methods">Endmember Extraction Methods</h2>
 <ol type="1">
 <li>Pixel Purity Index</li>
+</ol>
+<ul>
+<li>From what I understood, you can identify which pixels of an image is “pure”. So for example, in an image, a pixel that only contain a cloud particle can be thought of as a “pure cloud pixel”. The existence of these pure pixels and a pure pixel index scores is important in a sense that only pixels whose PPI scores under a certain threshold are considered as endmembers.</li>
+<li>This algorithm is one of the endmember extraction algorithm made that is still very popular up to this day.</li>
+</ul>
+<ol start="2" type="1">
 <li>N-FINDR Algorithm</li>
+</ol>
+<ul>
+<li>For this algorithm, we reduce the dimensionality of the data using princpical component analysis. The number of endmembers is equal to the number of principal components in this algorithm. This algorithm is an iterative approach where the volume of a simplex formed by endmembers are maximized.</li>
+</ul>
+<ol start="3" type="1">
 <li>Orthogonal Subspace Projection</li>
-<li>Vertex</li>
+</ol>
+<ul>
+<li></li>
+</ul>
+<ol start="4" type="1">
+<li>Vertex Component Analysis</li>
 </ol>
 
 
@@ -573,6 +595,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../content/report.html" class="pagination-link">
+        <span class="nav-page-text">Report</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
