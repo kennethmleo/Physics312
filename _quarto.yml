@@ -23,8 +23,13 @@ website:
         text: Home
       - href: content/language-model.qmd
         text: Language Models
-      - href: content/customizing.qmd
-        text: Customizing
+      - href: content/diffusion.qmd
+        text: Diffusion Models
+      - href: content/hyperspectral_unmixing.qmd
+        text: Hyperspectral Unmixing
+      - href: content/report.qmd
+        text: Report
+
 
 format:
   html:

@@ -1,0 +1,256 @@
+---
+title: Diffusion Models
+author: Kenneth Leo
+bibliography: references.bib
+format:
+  html:
+    code-fold: true
+jupyter: python3
+---
+
+## Model based on nonequilibrium thermodynamics
+
+Here is the general idea on how nonequilibrium thermodynamics was used to create an algorithm for generative modelling:
+
+1. Convert images to a simple noise distribution
+2. Reverse the process by using the distribution to create new images.
+
+To understand how this works, the article titled “The Physics Principle That Inspired Modern AI Art” described the process best. Suppose we have a grayscale image consisting of two pixels, with different grayscale values. If we plot the 2D plot of this, with each axis representing the grayscale values, we get a single point.
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits import mplot3d
+
+num1 = np.random.randint(0,256)
+num2 = np.random.randint(0,256)
+x = np.array([[num1,num2]])
+plt.figure(figsize = (12,6))
+
+plt.subplot(121)
+plt.imshow(x, vmin = 0,vmax = 255, cmap = 'gray')
+plt.xticks([])
+plt.yticks([])
+plt.title("grayscale values: " + str(num1) + " and " + str(num2))
+
+plt.subplot(122)
+plt.scatter([num1],[num2])
+plt.xlabel('image grayscale 1 value')
+plt.ylabel('image grayscale 2 value')
+plt.xlim(0,256)
+plt.ylim(0,256)
+plt.show()
+```
+
+
+If we have let’s say 20 grayscale images consisting of two pixels each and plot the grayscale values in the 2D plot, we notice that some points are closer to each other than other points. Then we can actually use this 2D plot to generate a 2D probability distribution function such that if we want to generate a new image, we just select a point from our distribution function and the result will give us the values of the pixels of our image, which is a combination of all the images from where we got the probability distribution from, with the images that clustered together having the highest similarity.
+
+
+```{python}
+num1_list = []
+num2_list = []
+
+plt.figure(figsize = (12*1,6*1.5))
+
+for i in range(20):
+    plt.subplot(5,4,i+1)
+    num1 = np.random.randint(0,256)
+    num2 = np.random.randint(0,256)
+    num1_list.append(num1)
+    num2_list.append(num2)
+    x = np.array([[num1,num2]])
+    plt.imshow(x, vmin = 0,vmax = 255, cmap = 'gray')
+    plt.xticks([])
+    plt.yticks([])
+    plt.title("grayscale values: " + str(num1) + " and " + str(num2), fontsize = 8)
+plt.show()
+
+plt.figure(figsize = (6,6))
+plt.scatter(num1_list,num2_list)
+plt.xlabel('image grayscale 1 value')
+plt.ylabel('image grayscale 2 value')
+plt.xlim(0,256)
+plt.ylim(0,256)
+plt.show()
+```
+
+If we extend this to an actual image, we get an N-D plot depending on the number of pixels of our image, with the simplified explanation still holding true. And the challenge now for researchers is how to generate this complicated probability distribution function.
+
+_Pitfall encoutered:_ Images formed just looked like blobs, but still cool! The general 'shape' was there, but in blob form. 
+
+## Model based on Estimating Gradients of Data Distribution
+
+Instead of estimating the probability distribution of the data, this model estimated the _gradient_ of the distribution. Here is a quick summary of how the model was done:
+
+1. Perturb image with random Gaussian noise of various magnitude
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+import random
+import cv2
+
+img = cv2.imread('test_image.jpg')[...,::-1]/255.0
+noise =  np.random.normal(loc=0, scale=1, size=img.shape)
+levels = [0,0.2,0.4,0.6,0.8]
+
+plt.figure(figsize = (3*5,4))
+noise_used = (noise - noise.min())/(noise.max()-noise.min())
+plt.subplot(1,6,1)
+plt.imshow(noise_used)
+plt.title('noise')
+plt.xticks([])
+plt.yticks([])
+for i,j in enumerate(levels):
+    noisy_img = np.clip((img + noise*j),0,1)
+    plt.subplot(1,6,i+2)
+    plt.imshow(noisy_img)
+    plt.title('noise = '+ str(levels[i]))
+    plt.xticks([])
+    plt.yticks([])
+plt.show()
+```
+
+2. Use trained neural network to predict the original image using the gradient of the distribution of the noisy images (process looks like the inverse of the plots above).
+
+
+_Pitfall encountered:_ Though the images predicted are of good quality, the computational time it took was very long. 
+
+
+## Denoising Diffusion Probabilistic Models 
+
+In this final paper, the two models discussed above were combined. What happens here is that from a noisy blob of data, we get a recognizable image. What happens in this model is that, there is a forward and a backward process.
+
+```{python}
+import os
+os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
+
+from typing import Any, List
+from pathlib import Path
+
+import numpy as np
+import torch
+from torch import nn
+from sklearn.datasets import make_swiss_roll
+import matplotlib.pyplot as plt
+from matplotlib import animation
+
+from pydantic import BaseModel
+
+from diffusers import DDPM
+from models import BasicDiscreteTimeModel
+from IPython.display import Image
+
+class TrainResult(BaseModel):
+    losses: List[int]
+    samples: List[Any]
+
+
+def train(
+    model: nn.Module,
+    ddpm: DDPM,
+    batch_size: int = 128,
+    n_epochs: int = 400,
+    sample_size: int = 512,
+    steps_between_sampling: int = 20,
+    seed: int = 42,
+) -> TrainResult:
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+
+    assert batch_size > 0 and steps_between_sampling > 0 and sample_size > 0
+
+    N = 1 << 10
+    X = make_swiss_roll(n_samples=N, noise=1e-1)[0][:, [0, 2]] / 10.0
+
+    optim = torch.optim.Adam(model.parameters(), 1e-3)
+
+    losses: List[float] = []
+    samples: List[Any] = []
+    step = 0
+    avg_loss = None  # exponential moving average
+    for _ in range(n_epochs):
+        ids = np.random.choice(N, N, replace=False)
+        for i in range(0, len(ids), batch_size):
+            x = torch.tensor(X[ids[i : i + batch_size]], dtype=torch.float32)
+            optim.zero_grad()
+            loss = ddpm.diffusion_loss(model, x)
+            loss.backward()
+            optim.step()
+
+            losses.append(loss.item())
+            if avg_loss is None:
+                avg_loss = losses[-1]
+            else:
+                avg_loss = 0.95 * avg_loss + 0.05 * losses[-1]
+            if not step % steps_between_sampling:
+                samples.append(ddpm.sample(model, n_samples=sample_size))
+            step += 1
+    return TrainResult(losses=losses, samples=samples)
+
+
+def animate(samples: List[Any], save: bool = True):
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.set(xlim=(-2.0, 2.0), ylim=(-2.0, 2.0))
+    scat = ax.scatter(*samples[0].detach().numpy().T, c="k", alpha=0.3)
+
+    def animate(i):
+        scat.set_offsets(samples[i].detach().numpy())
+
+    anim = animation.FuncAnimation(fig, animate, interval=100, frames=len(samples) - 1)
+    if save:
+        anim.save(filename="animation.gif", writer=animation.PillowWriter(fps=5))
+    #return anim
+
+
+def main(
+    n_steps: int = 100,
+    d_model: int = 128,
+    n_layers: int = 2,
+    batch_size: int = 128,
+    n_epochs: int = 400,
+    sample_size: int = 512,
+    steps_between_sampling: int = 20,
+    seed: int = 42,
+):
+    #print("Creating model")
+    model = BasicDiscreteTimeModel(d_model=d_model, n_layers=n_layers)
+    ddpm = DDPM(n_steps=n_steps)
+
+    #print("Training")
+    result = train(
+        model=model,
+        ddpm=ddpm,
+        batch_size=batch_size,
+        n_epochs=n_epochs,
+        sample_size=sample_size,
+        steps_between_sampling=steps_between_sampling,
+        seed=seed,
+    )
+    path = "animation.gif"
+    animate(result.samples)
+
+
+if __name__ == "__main__":
+    main()
+```
+Y
+
+![Example of backward process](animation.gif){#fig-swirl}
+
+To explain the process of this paper, here are the important steps that I have noted and I think are important:
+
+1. Starting with the "real images", we can get a real data distribution from these set of images. We can then sample this dataset to get an image for example.
+2. Define forward diffusion process, that is, adding a Gaussian noise at each time step t, with a mean and variance value.
+3. Use a neural network that is trained using the images with gaussian noise added to them and basically learn (represent) the mean and variance of the probability distribution. In the original paper, the variance was fixed and only the mean changes.
+
+## Sample Images with their prompts
+
+::: {layout-nrow=2}
+![A pikachu fine dining with a view to the Eiffel Tower](pikachu.jpg)
+
+![A pikachu fine dining with a view to the Eiffel Tower](pikachu2.jpg)
+
+![A pikachu fine dining with a view to the Eiffel Tower](pikachu3.jpg)
+
+![A pikachu fine dining with a view to the Eiffel Tower](pikachu4.jpg)
+:::

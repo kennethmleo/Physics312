@@ -1,0 +1,102 @@
+---
+title: Hyperspectral Unmixing
+author: Kenneth Leo
+bibliography: references.bib
+format:
+  html:
+    code-fold: true
+jupyter: python3
+---
+
+In order to perform hyperspectral unmixing, we have to identify the endmembers of each pixel of the n dimensional image.
+- Endmembers: components of each pixel. Before performing unmixing, we have to identify the "components" of each pixel in our hyperspectral data.
+
+## Principal Component Analysis
+
+For example, if we have this signal on the right, it is actually composed multiple signals of different forms. And we can perform principal component analysis to identify the signals that form it. We can also set a certain threshold such that we only choose as actual data the first $n$ signals that represent 95% of the data. All signals after the first $n$ signals will now be considered as noise.
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import scipy.io
+from sklearn.decomposition import PCA, IncrementalPCA
+from tqdm import tqdm
+pd.options.mode.chained_assignment = None 
+%matplotlib inline 
+
+data = scipy.io.loadmat('munsell400_700_5.mat')
+
+munsell = data['munsell']
+wavelength = np.arange(400,700+5,5)
+
+df_fluorescent = pd.read_excel("Fluorescents.xls", skiprows = 1)
+df_fluorescent.rename(columns={'Unnamed: 0':'wavelength'}, inplace=True)
+
+df_fluorescentF1 = df_fluorescent[['wavelength', 'F1']]
+df_fluorescentF1.rename(columns = {'F1':'illumination'}, inplace = True)
+
+df_fluorescentF1 = df_fluorescentF1[(df_fluorescentF1['wavelength'] >= 400) & (df_fluorescentF1['wavelength'] <= 700)]
+df_fluorescentF1 = df_fluorescentF1.reset_index(inplace=False)
+
+color_signal = []
+for i,j in enumerate(munsell):
+    color_signal.append(j * df_fluorescentF1.illumination[i])
+color_signal = np.array(color_signal)
+
+pca = PCA(len(color_signal))
+pca.fit(color_signal.T)
+
+mean = pca.mean_
+evecs = pca.components_
+evals = pca.explained_variance_ratio_
+
+explained = pca.explained_variance_ratio_.cumsum() * 100
+
+accuracy = 95
+k = np.argmax(explained>accuracy)
+print("Number of components explaining 95% variance: "+ str(k+1))
+
+plt.figure(figsize = (9*3,6))
+
+plt.subplot(131)
+plt.plot(wavelength, df_fluorescentF1.illumination, color = 'orange')
+#plt.ylim(-0.05,1.05)
+plt.ylabel('relative intensity', fontsize = 15)
+plt.xlabel('wavelength',fontsize = 15)
+
+plt.subplot(132)
+plt.plot(np.arange(0,len(munsell))+1, explained, 'o-', color = 'black')
+plt.ylabel('Cumulative explained variance ratio', fontsize = 14)
+plt.xlabel('number of principal components', fontsize = 14)
+plt.axvline(x=k+1, color="blue", linewidth = 1)
+plt.axhline(y=accuracy, color="red", linewidth = 1)
+
+plt.subplot(133)
+labels = ['eigenvector 1', 'eigenvector 2', 'eigenvector 3']
+colors = ['#00008B', 'Turquoise', '#D2BD96']
+for i in range(k+1):
+    pc = evecs[i]
+    plt.plot(wavelength, pc, color = colors[i], label = labels[i])
+plt.legend(fontsize = 14)
+plt.xlabel('wavelength',fontsize = 15)
+plt.show()
+
+```
+
+_Pitfall of using PCA only_: Endmembers cannot be estimated completely just by using PCA. Reason for this is that in real images, the spectral data is nonlinear in nature.
+
+## Endmember Extraction Methods
+
+1. Pixel Purity Index
+
+- From what I understood, you can identify which pixels of an image is "pure". So for example, in an image, a pixel that only contain a cloud particle can be thought of as a "pure cloud pixel". The existence of these pure pixels and a pure pixel index scores is important in a sense that only pixels whose PPI scores under a certain threshold are considered as endmembers. 
+- This algorithm is one of the endmember extraction algorithm made that is still very popular up to this day.
+
+2. N-FINDR Algorithm
+
+- For this algorithm, we reduce the dimensionality of the data using princpical component analysis. The number of endmembers is equal to the number of principal components in this algorithm. This algorithm is an iterative approach where the volume of a simplex formed by endmembers are maximized.
+3. Orthogonal Subspace Projection
+
+- 
+4. Vertex Component Analysis
