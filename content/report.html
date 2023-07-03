@@ -21,6 +21,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
@@ -154,6 +217,7 @@ div.csl-indent {
   <ul>
   <li><a href="#default-parameters-of-alpaca.cpp" id="toc-default-parameters-of-alpaca.cpp" class="nav-link active" data-scroll-target="#default-parameters-of-alpaca.cpp">Default parameters of alpaca.cpp</a></li>
   <li><a href="#varying-the-temperature" id="toc-varying-the-temperature" class="nav-link" data-scroll-target="#varying-the-temperature">Varying the temperature</a></li>
+  <li><a href="#varying-the-top-p" id="toc-varying-the-top-p" class="nav-link" data-scroll-target="#varying-the-top-p">Varying the top-p</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/kennethmleo/Physics312/edit/main/content/report.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/kennethmleo/Physics312/blob/main/content/report.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/kennethmleo/Physics312/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -246,12 +310,78 @@ div.csl-indent {
 </table>
 <p>We see from the table above, just from the first five results the difference in the results of <code>alpaca.cpp</code> language model if we vary the temperature. We see that for low temperature results, the results are repetitive and that the sentences formed are not that ‘creative’. On the other hand, the results produced by high temperature are more varied and more creative - that is the sentences formed are more “imaginatively” written.</p>
 <p><strong>Key idea</strong>: We see here that a balance of temperature will basically control the level of ‘randomness’ of the results. Now, to make this study more quantitative, its nice to make a measure of creativity.</p>
+</section>
+<section id="varying-the-top-p" class="level2">
+<h2 class="anchored" data-anchor-id="varying-the-top-p">Varying the top-p</h2>
+<p>Now there are two parameters that can also greatly affect the ouput of our language model and these are the <code>top_k</code> and <code>top_p</code> parameters. So given a list of possible next words in a fill in the blank type of sentence, ordered from highest to lowest probability of being chosen, the <code>top_k</code> and <code>top_p</code> parameters control the ‘cut-off’ of which words will be considered in the final list of possible words <span class="citation" data-cites="holtzman2020curious">(<a href="#ref-holtzman2020curious" role="doc-biblioref">Holtzman et al. 2020</a>)</span>.</p>
+<p>I think this is better to be presented using visuals. Suppose we have the prompt “The weather today is ___” and we have 5 possible next words, ordered in decreasing probability of being the actual next word.</p>
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>weather_conditions <span class="op">=</span> [<span class="st">'Sunny'</span>, <span class="st">'Cloudy'</span>, <span class="st">'Rainy'</span>, <span class="st">'Windy'</span>, <span class="st">'Snowy'</span>]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>frequency <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">2</span>]</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>frequency_norm <span class="op">=</span> np.array(frequency)<span class="op">/</span><span class="bu">sum</span>(frequency)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>sorted_data <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">zip</span>(frequency_norm <span class="op">*</span> <span class="dv">100</span>, weather_conditions))</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>sorted_frequency, sorted_weather_conditions <span class="op">=</span> <span class="bu">zip</span>(<span class="op">*</span>sorted_data)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">5</span>))</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>ax.barh(sorted_weather_conditions, sorted_frequency, color <span class="op">=</span> <span class="st">'blue'</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Probability (%)'</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Possible next word'</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'The weather today is _____'</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="report_files/figure-html/cell-2-output-1.png" width="465" height="449"></p>
+</div>
+</div>
+<p>Now if we set <code>top_k = 2</code>, that means that we will only consider the top 2 words which are <code>Sunny</code> and <code>Cloudy</code>. On the other hand, if we set <code>top_p = 0.8</code>, that means that we are only considering the words whose sum of probabilities are greater than the set value of <code>top_p</code>, which in our case are <code>Sunny</code>, <code>Cloudy</code> and <code>Rainy</code>.</p>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>weather_conditions <span class="op">=</span> [<span class="st">'Sunny'</span>, <span class="st">'Cloudy'</span>, <span class="st">'Rainy'</span>, <span class="st">'Windy'</span>, <span class="st">'Snowy'</span>]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>frequency <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">2</span>]</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>frequency_norm <span class="op">=</span> np.array(frequency)<span class="op">/</span><span class="bu">sum</span>(frequency)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>c_k <span class="op">=</span> [<span class="st">'red'</span>, <span class="st">'red'</span>, <span class="st">'blue'</span>, <span class="st">'blue'</span>, <span class="st">'blue'</span>]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>c_p <span class="op">=</span> [<span class="st">'red'</span>, <span class="st">'red'</span>, <span class="st">'red'</span>, <span class="st">'blue'</span>, <span class="st">'blue'</span>]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>sorted_data <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">zip</span>(frequency_norm <span class="op">*</span> <span class="dv">100</span>, weather_conditions))</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>sorted_frequency, sorted_weather_conditions <span class="op">=</span> <span class="bu">zip</span>(<span class="op">*</span>sorted_data)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2)  <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>ax1.barh(sorted_weather_conditions, sorted_frequency, color <span class="op">=</span> np.array(c_k)[::<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'Probability'</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'Possible next word'</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>ax2.barh(sorted_weather_conditions, sorted_frequency, color <span class="op">=</span> c_p[::<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">'Probability'</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="report_files/figure-html/cell-3-output-1.png" width="837" height="429"></p>
+</div>
+</div>
+<p>So we see from the discussion above that aside from temperature, top-k and top-p values are also need to be considered when tweaking the language model.</p>
 
 
 
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-holtzman2020curious" class="csl-entry" role="doc-biblioentry">
+Holtzman, Ari, Jan Buys, Li Du, Maxwell Forbes, and Yejin Choi. 2020. <span>“The Curious Case of Neural Text Degeneration.”</span> <a href="https://arxiv.org/abs/1904.09751">https://arxiv.org/abs/1904.09751</a>.
+</div>
 <div id="ref-wang2020contextual" class="csl-entry" role="doc-biblioentry">
 Wang, Pei-Hsin, Sheng-Iou Hsieh, Shih-Chieh Chang, Yu-Ting Chen, Jia-Yu Pan, Wei Wei, and Da-Chang Juan. 2020. <span>“Contextual Temperature for Language Modeling.”</span> <a href="https://arxiv.org/abs/2012.13575">https://arxiv.org/abs/2012.13575</a>.
 </div>
