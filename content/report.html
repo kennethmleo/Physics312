@@ -342,7 +342,7 @@ div.csl-indent {
 <p><img src="report_files/figure-html/cell-2-output-1.png" width="465" height="449"></p>
 </div>
 </div>
-<p>Now if we set <code>top_k = 2</code>, that means that we will only consider the top 2 words which are <code>Sunny</code> and <code>Cloudy</code>. On the other hand, if we set <code>top_p = 0.8</code>, that means that we are only considering the words whose sum of probabilities are greater than the set value of <code>top_p</code>, which in our case are <code>Sunny</code>, <code>Cloudy</code> and <code>Rainy</code>.</p>
+<p>Now if we set <code>top_k = 2</code>, that means that we will only consider the top 2 words which are <code>Sunny</code> and <code>Cloudy</code>. A <code>top_k = 1</code> value means that the language model deploys some sort of greedy algorithm where only the top answer is considered as the best answer. On the other hand, if we set <code>top_p = 0.8</code>, that means that we are only considering the words whose sum of probabilities are greater than the set value of <code>top_p</code>, which in our case are <code>Sunny</code>, <code>Cloudy</code> and <code>Rainy</code>.</p>
 <div class="cell" data-execution_count="2">
 <details>
 <summary>Code</summary>
