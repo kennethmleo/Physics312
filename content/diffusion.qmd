@@ -10,12 +10,12 @@ jupyter: python3
 
 ## Model based on nonequilibrium thermodynamics
 
-Here is the general idea on how nonequilibrium thermodynamics was used to create an algorithm for generative modelling:
+Here is the general idea on how nonequilibrium thermodynamics was used to create an algorithm for generative modelling [@sohldickstein2015deep]:
 
 1. Convert images to a simple noise distribution
 2. Reverse the process by using the distribution to create new images.
 
-To understand how this works, the article titled “The Physics Principle That Inspired Modern AI Art” described the process best. Suppose we have a grayscale image consisting of two pixels, with different grayscale values. If we plot the 2D plot of this, with each axis representing the grayscale values, we get a single point.
+To understand how this works, the article titled “The Physics Principle That Inspired Modern AI Art” described the process best [@Ananthaswamy_2023]. Suppose we have a grayscale image consisting of two pixels, with different grayscale values. If we plot the 2D plot of this, with each axis representing the grayscale values, we get a single point.
 
 ```{python}
 import numpy as np
@@ -80,7 +80,7 @@ _Pitfall encoutered:_ Images formed just looked like blobs, but still cool! The 
 
 ## Model based on Estimating Gradients of Data Distribution
 
-Instead of estimating the probability distribution of the data, this model estimated the _gradient_ of the distribution. Here is a quick summary of how the model was done:
+Instead of estimating the probability distribution of the data, this model estimated the _gradient_ of the distribution [@song2020generative]. Here is a quick summary of how the model was done:
 
 1. Perturb image with random Gaussian noise of various magnitude
 ```{python}
@@ -118,7 +118,7 @@ _Pitfall encountered:_ Though the images predicted are of good quality, the comp
 
 ## Denoising Diffusion Probabilistic Models 
 
-In this final paper, the two models discussed above were combined. What happens here is that from a noisy blob of data, we get a recognizable image. What happens in this model is that, there is a forward and a backward process.
+In this final paper, the two models discussed above were combined [@ho2020denoising]. What happens here is that from a noisy blob of data, we get a recognizable image. What happens in this model is that, there is a forward and a backward process.
 
 ```{python}
 import os
@@ -233,9 +233,8 @@ def main(
 if __name__ == "__main__":
     main()
 ```
-Y
 
-![Example of backward process](animation.gif){#fig-swirl}
+![Example of backward process (code taken from [@Jmkernes_2022])](animation.gif){#fig-swirl}
 
 To explain the process of this paper, here are the important steps that I have noted and I think are important:
 
@@ -243,7 +242,7 @@ To explain the process of this paper, here are the important steps that I have n
 2. Define forward diffusion process, that is, adding a Gaussian noise at each time step t, with a mean and variance value.
 3. Use a neural network that is trained using the images with gaussian noise added to them and basically learn (represent) the mean and variance of the probability distribution. In the original paper, the variance was fixed and only the mean changes.
 
-## Sample Images with their prompts
+## Sample Images with their prompts [using @Face_2022]
 
 ::: {layout-nrow=2}
 ![A pikachu fine dining with a view to the Eiffel Tower](pikachu.jpg)
